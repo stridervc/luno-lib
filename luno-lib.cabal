@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: fcdd7918db9cd79c78c03fc7e2337a6c304e560dade80adc4ef732c370395559
+-- hash: e2e43276aaefc6fb8b40326ee4ffd6d55c05f808e4e8ab94e598877b6187f224
 
 name:           luno-lib
 version:        0.1.0.0
@@ -28,12 +28,18 @@ source-repository head
 library
   exposed-modules:
       Lib
+      Luno
   other-modules:
       Paths_luno_lib
   hs-source-dirs:
       src
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
+    , servant
+    , servant-client
+    , text
+    , transformers
   default-language: Haskell2010
 
 test-suite luno-lib-test

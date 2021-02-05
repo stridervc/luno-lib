@@ -24,8 +24,12 @@ dependencies:
 
 library:
   source-dirs: src
-#  dependencies:
-#  - text
+  dependencies:
+  - text
+  - servant
+  - servant-client
+  - aeson
+  - transformers
 
 tests:
   luno-lib-test:
