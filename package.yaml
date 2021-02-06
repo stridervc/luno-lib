@@ -42,5 +42,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - luno-lib
-    - servant-client
     - text
