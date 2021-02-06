@@ -6,7 +6,13 @@ import qualified Data.Text as T
 main :: IO ()
 main = do
   client <- lunoClient
-  res <- ticker client "XBTZAR"
 
+  {-
+  res <- ticker client "XBTZAR"
+  putStrLn ""
+  print res
+  -}
+
+  res <- allTickers client
   putStrLn ""
   print res

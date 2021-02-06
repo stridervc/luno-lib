@@ -10,7 +10,7 @@ module Luno.Market
   , Status
   , Ticker (..)
   , ticker
-  , tickers
+  , allTickers
   ) where
 
 import Luno.Common
@@ -62,16 +62,19 @@ instance FromJSON Ticker where
             <*> (readStatus <$> o .: "status")
             <*> (readTime <$> o .: "timestamp")
 
+newtype Tickers = Tickers { tickers  :: [Ticker] } deriving (Eq, Show, Generic)
+instance FromJSON Tickers
+
 -- |Market API endpoints
 type LunoMarketAPI = "ticker"  :> QueryParam "pair" T.Text :> Get '[JSON] Ticker
-          :<|> "tickers" :> Get '[JSON] [Ticker]
+          :<|> "tickers" :> Get '[JSON] Tickers
 
 lunoMarketAPI :: Proxy LunoMarketAPI
 lunoMarketAPI = Proxy
 
 -- |API endpoint function type definitions
 ticker'   :: Maybe Pair -> ClientM Ticker
-tickers'  :: ClientM [Ticker]
+tickers'  :: ClientM Tickers
 
 -- |Create API endpoint functions
 ticker' :<|> tickers' = client lunoMarketAPI
@@ -81,5 +84,9 @@ ticker :: ClientEnv -> Pair -> IO (Either ClientError Ticker)
 ticker client pair = lunoQuery client $ ticker' $ Just pair
 
 -- |Query all tickers
-tickers :: ClientEnv -> IO (Either ClientError [Ticker])
-tickers client = lunoQuery client tickers'
+allTickers :: ClientEnv -> IO (Either ClientError [Ticker])
+allTickers client = do
+  ts <- lunoQuery client tickers'
+  case ts of
+    Left e    -> return $ Left e
+    Right ts  -> return $ Right $ tickers ts

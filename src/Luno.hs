@@ -19,7 +19,7 @@ module Luno
   , Status
   , Ticker (..)
   , ticker
-  , tickers
+  , allTickers
   ) where
 
 import Luno.Common
