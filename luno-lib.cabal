@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6dfaa8f9151cbbd6de64aa72eb9a0a7603b59e62019c3b013113db4e7d5ec54b
+-- hash: b5bc8334a9a0612aab8df2509a0ce47cd7ef2ab64db33475a1152aab21d01568
 
 name:           luno-lib
 version:        0.1.0.0
@@ -43,6 +43,7 @@ library
     , servant
     , servant-client
     , text
+    , time
   default-language: Haskell2010
 
 test-suite luno-lib-test

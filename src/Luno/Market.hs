@@ -17,6 +17,8 @@ import Luno.Common
 
 import Data.Aeson
 import Data.Proxy
+import Data.Time (UTCTime)
+import Data.Time.Clock.POSIX (posixSecondsToUTCTime)
 import GHC.Generics
 import Servant.API
 import Servant.Client
@@ -36,6 +38,9 @@ readFloat = read . T.unpack
 readStatus :: T.Text -> Status
 readStatus = read . T.unpack
 
+readTime :: Integer -> UTCTime
+readTime t = posixSecondsToUTCTime $ fromInteger t / 1000
+
 -- |Ticker for a single currency pair
 data Ticker = Ticker
   { ask                 :: Price
@@ -44,7 +49,7 @@ data Ticker = Ticker
   , pair                :: Pair
   , rolling24HourVolume :: Amount
   , status              :: Status
-  , timestamp           :: Integer
+  , timestamp           :: UTCTime
   } deriving (Eq, Show)
 
 instance FromJSON Ticker where
@@ -55,7 +60,7 @@ instance FromJSON Ticker where
             <*> o .: "pair"
             <*> (readFloat <$> o .: "rolling_24_hour_volume")
             <*> (readStatus <$> o .: "status")
-            <*> o .: "timestamp"
+            <*> (readTime <$> o .: "timestamp")
 
 -- |Market API endpoints
 type LunoMarketAPI = "ticker"  :> QueryParam "pair" T.Text :> Get '[JSON] Ticker
