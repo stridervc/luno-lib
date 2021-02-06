@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e2e43276aaefc6fb8b40326ee4ffd6d55c05f808e4e8ab94e598877b6187f224
+-- hash: b971492f7e6304bb300c25ae695ca2b109941ef9c912e7b2e64018e2aa0d0da1
 
 name:           luno-lib
 version:        0.1.0.0
@@ -36,10 +36,11 @@ library
   build-depends:
       aeson
     , base >=4.7 && <5
+    , http-client
+    , http-client-tls
     , servant
     , servant-client
     , text
-    , transformers
   default-language: Haskell2010
 
 test-suite luno-lib-test
@@ -53,4 +54,6 @@ test-suite luno-lib-test
   build-depends:
       base >=4.7 && <5
     , luno-lib
+    , servant-client
+    , text
   default-language: Haskell2010

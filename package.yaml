@@ -29,7 +29,8 @@ library:
   - servant
   - servant-client
   - aeson
-  - transformers
+  - http-client
+  - http-client-tls
 
 tests:
   luno-lib-test:
@@ -41,3 +42,5 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - luno-lib
+    - servant-client
+    - text
